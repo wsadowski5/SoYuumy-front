@@ -1,36 +1,32 @@
-import css from "./Input.module.scss";
-import Icon from "../../../utils/icons/icons.svg";
+
 import PropTypes from "prop-types";
+import { EnvelopeIcon, UserIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 
+const Input = ({ placeholder, name, type, register }) => {
 
-const Input = ({ placeholder, name, type }) => {
-  let iconName;
-
-  if (name === "name") {
-    iconName = "icon-name";
-  } else if (name === "password") {
-    iconName = "icon-password";
-  } else if (name === "email") {
-    iconName = "icon-email";
-  }
 
   return (
-    <div className={css.input_wrapper}>
-      <input placeholder={placeholder} type={type} name={name} />
-      <svg className={css.icon} width="20" height="20">
-        <use href={`${Icon}#${iconName}`}></use>
-      </svg>
+    <div className="relative flex items-center">
+      <input
+        className="my-2 px-3 py-1 pl-10"
+        placeholder={placeholder}
+        type={type}
+        {...register(name)}
+      />
+     
+      {name === "email" &&<EnvelopeIcon className="absolute ml-1 size-6 " />}
+      {name === "name" && <UserIcon className="absolute ml-1 size-6 " />}
+      {name === "password" && <LockClosedIcon className="absolute ml-1 size-6" />}
+
     </div>
   );
 };
 
-
 Input.propTypes = {
-    type: PropTypes.string.isRequired, // typ inputa (email, password, itp.)
-    placeholder: PropTypes.string.isRequired, // placeholder inputa
-    name: PropTypes.string.isRequired // nazwa inputa
-  };
-
-  
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired, // Dodajemy props register
+};
 
 export default Input;
